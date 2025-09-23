@@ -87,6 +87,11 @@
     </section>
 
     <div style="margin-top:14px">{{ $films->links() }}</div>
+
+    <a class="btn" href="{{ route('films.index') }}">
+      Back
+    </a>
+
   </div>
 </body>
 </html>

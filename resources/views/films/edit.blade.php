@@ -96,7 +96,6 @@
             <button type="submit" class="btn primary"><i class="fas fa-save"></i> Mentés</button>
             <a class="btn secondary" href="{{ route('films.show', $film) }}">Mégse</a>
           </div>
-
           @if ($errors->any())
             <div class="help" style="color:#b91c1c;margin-top:10px">
               <strong>Hiba:</strong>
