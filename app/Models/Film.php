@@ -37,10 +37,19 @@ class Film extends Model
     }
 
     public function actors()
-{
-    return $this->belongsToMany(Actor::class, 'film_actor', 'film_id', 'actor_id')
-        ->withPivot('is_lead')
-        ->withTimestamps();
-}
+    {
+        return $this->belongsToMany(Actor::class, 'film_actor', 'film_id', 'actor_id')
+            ->withPivot('is_lead')
+            ->withTimestamps();
+    }
 
+    public function getImageUrlAttribute(): string
+    {
+        if (!$this->image) {
+            return asset('img/placeholder-2x3.jpg'); 
+        }
+
+        return preg_match('#^https?://#', $this->image) ? $this->image : asset($this->image);
+    }
 }
+ 

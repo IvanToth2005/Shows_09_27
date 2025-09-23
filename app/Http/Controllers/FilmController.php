@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Film, Type};
+use App\Models\{Film, Type, Director};
 use Illuminate\Http\Request;
 
 class FilmController extends Controller
@@ -13,25 +13,39 @@ class FilmController extends Controller
    
     public function index(Request $request)
     {
-        $types = Type::orderBy('name')->get();
+         $types = Type::orderBy('name')->get();
+    $typeParam = $request->query('type', 'all');
+    $q = trim((string)$request->query('q', ''));
 
-        $typeParam = $request->query('type', 'all');
-        $query = Film::with(['director','type']);
+    $query = Film::with(['director','type']);
 
-        if ($typeParam !== 'all' && ctype_digit((string)$typeParam)) {
-            $query->where('type_id', (int)$typeParam);
-        }
+    // típus szűrő
+    if ($typeParam !== 'all' && ctype_digit((string)$typeParam)) {
+        $query->where('type_id', (int)$typeParam);
+    }
 
-        $films = $query->orderBy('title')->paginate(12)->withQueryString();
+    // kereső
+    if ($q !== '') {
+        $query->where(function($w) use ($q) {
+            $w->where('title', 'like', "%{$q}%")
+              ->orWhereHas('director', fn($d)=>$d->where('name','like',"%{$q}%"))
+              ->orWhereHas('type',     fn($t)=>$t->where('name','like',"%{$q}%"));
+        });
+    }
 
-        return view('films.index', compact('films','types','typeParam'));
+    $films = $query->orderBy('title')->paginate(12)->withQueryString();
+
+    return view('films.index', compact('films','types','typeParam','q'));
     }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        $types = Type::orderBy('name')->get();
+        $directors = Director::orderBy('name')->get();
+ 
+        return view('films.create', compact('types','directors'));
     }
 
     /**
@@ -39,7 +53,21 @@ class FilmController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        {
+            $data = $request->validate([
+                'title'        => 'required|string|max:255',
+                'director_id'  => 'required|exists:directors,id',
+                'release_date' => 'nullable|date',
+                'type_id'      => 'nullable|exists:types,id',
+                'length'       => 'nullable|integer|min:1',
+                'description'  => 'nullable|string',
+            ]);
+     
+            Film::create($data);
+     
+            return redirect()->route('films.index')
+                ->with('success','Film sikeresen hozzáadva!');
+        }
     }
 
     /**
@@ -47,7 +75,8 @@ class FilmController extends Controller
      */
     public function show(Film $film)
     {
-        //
+        $film->load(['director','type','actors']); 
+        return view('films.show', compact('film'));
     }
 
     /**
@@ -55,7 +84,10 @@ class FilmController extends Controller
      */
     public function edit(Film $film)
     {
-        //
+        $types     = Type::orderBy('name')->get();
+        $directors = Director::orderBy('name')->get();
+
+        return view('films.edit', compact('film', 'types', 'directors'));
     }
 
     /**
@@ -63,7 +95,26 @@ class FilmController extends Controller
      */
     public function update(Request $request, Film $film)
     {
-        //
+        $data = $request->validate([
+            'title'        => ['required','string','max:255'],
+            'director_id'  => ['required','exists:directors,id'],
+            'type_id'      => ['required','exists:types,id'],
+            'release_date' => ['nullable','date'],
+            'length'       => ['nullable','integer','min:1'],
+            'image'        => ['nullable','string','max:255'], 
+            'description'  => ['nullable','string'],
+        ]);
+
+       
+        if (array_key_exists('image', $data) && trim((string)$data['image']) === '') {
+            $data['image'] = null;
+        }
+
+        $film->update($data);
+
+        return redirect()
+            ->route('films.show', $film)
+            ->with('success', 'Film frissítve.');
     }
 
     /**
@@ -71,6 +122,10 @@ class FilmController extends Controller
      */
     public function destroy(Film $film)
     {
-        //
+        $film->actors()->detach();
+        $film->delete();
+        return redirect()
+            ->route('films.index')
+            ->with('success', 'Film törölve: '.$film->title);
     }
 }

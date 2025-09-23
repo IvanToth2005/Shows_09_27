@@ -44,4 +44,11 @@ class Series extends Model
             ->withPivot('is_lead')
             ->withTimestamps();
     }
+    public function getImageUrlAttribute(): string
+    {
+        if (!$this->image) {
+            return 'https://placehold.co/800x1200?text='.urlencode($this->title);
+        }
+        return preg_match('#^https?://#', $this->image) ? $this->image : asset($this->image);
+    }
 }
