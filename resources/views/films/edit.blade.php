@@ -35,7 +35,7 @@
   </style>
 </head>
 <body>
-  @include('partials.nav')
+  
 
   <div class="container">
     <a href="{{ route('films.index') }}" class="meta">← Vissza a filmekhez</a>

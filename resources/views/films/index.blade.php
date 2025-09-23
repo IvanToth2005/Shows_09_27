@@ -45,7 +45,7 @@
   </style>
 </head>
 <body>
-  @include('partials.nav')
+  
 
   <div class="container">
     <h1>Filmek</h1>
