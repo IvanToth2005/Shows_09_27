@@ -6,14 +6,13 @@
   <title>Kezdőlap – Mit szeretnél nézni?</title>
   <style>
   :root{
-    /* Vidám, pasztell akcentusok */
-    --txt: #0f172a;         /* sötétebb szöveg világos háttéren */
-    --muted: #64748b;       /* halvány szöveg */
-    --accent1:#ff80b5;      /* pink */
-    --accent2:#60a5fa;      /* kék */
-    --accent3:#34d399;      /* zöld */
-    --card:#ffffff;         /* kártyák fehér alapja */
-    --border:#eef2ff;       /* kártyaszegély */
+    --txt: #0f172a;         
+    --muted: #64748b;     
+    --accent1:#ff80b5;      
+    --accent2:#60a5fa;     
+    --accent3:#34d399;      
+    --card:#ffffff;         
+    --border:#eef2ff;      
   }
 
   *{ box-sizing: border-box; }
@@ -21,7 +20,7 @@
     margin:0;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, sans-serif;
     color:var(--txt);
-    /* napfényes, vidám háttér */
+
     background:
       radial-gradient(70% 60% at 15% 0%, #fff1f2 0%, transparent 60%),
       radial-gradient(60% 50% at 85% 10%, #e0f2fe 0%, transparent 60%),

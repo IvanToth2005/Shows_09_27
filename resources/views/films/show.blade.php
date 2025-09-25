@@ -47,7 +47,7 @@
   </style>
 </head>
 <body>
-  
+  @include('partials.nav')
 
   <div class="container">
     <a href="{{ route('films.index') }}" class="back">← Vissza a filmekhez</a>

@@ -34,7 +34,7 @@
   </style>
 </head>
 <body>
-  
+  @include('partials.nav')
 
   <div class="container">
     <a href="{{ route('series.index') }}" class="meta">← Vissza a sorozatokhoz</a>

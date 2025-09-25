@@ -10,9 +10,24 @@ class ActorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $q = trim((string)$request->query('q', ''));
+
+        $actors = Actor::with([
+                'films.type','films.director',
+                'series.type','series.director',
+            ])
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where('name','like',"%{$q}%")
+                    ->orWhereHas('films', fn($f)=>$f->where('title','like',"%{$q}%"))
+                    ->orWhereHas('series', fn($s)=>$s->where('title','like',"%{$q}%"));
+            })
+            ->orderBy('name')
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('actors.index', compact('actors','q'));
     }
 
     /**
@@ -36,7 +51,8 @@ class ActorController extends Controller
      */
     public function show(Actor $actor)
     {
-        //
+            $actor->load(['films.type','films.director','series.type','series.director']);
+            return view('actors.show', compact('actor'));
     }
 
     /**

@@ -40,7 +40,7 @@
   </style>
 </head>
 <body>
-  
+  @include('partials.nav')
 
   <div class="container">
     <h1>Sorozatok</h1>

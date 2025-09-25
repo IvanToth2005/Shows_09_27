@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Filmek</title>
   <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
-  <style>/*style.css*/
+  <style>
     :root{ --ink:#0f172a; --muted:#64748b; --ring:0 0 0 3px rgba(96,165,250,.35); --accent:#60a5fa; }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Arial,sans-serif;background:#f7fafc;color:var(--ink)}
@@ -45,7 +45,7 @@
   </style>
 </head>
 <body>
-  
+  @include('partials.nav')
 
   <div class="container">
     <h1>Filmek</h1>
@@ -87,11 +87,6 @@
     </section>
 
     <div style="margin-top:14px">{{ $films->links() }}</div>
-
-    <a class="btn" href="{{ route('films.index') }}">
-      Back
-    </a>
-
   </div>
 </body>
 </html>

@@ -17,6 +17,7 @@ class Series extends Model
         'title',
         'director_id',
         'release_date',
+        'seasons',
         'description',
         'image',
         'type_id',
@@ -25,6 +26,7 @@ class Series extends Model
 
     protected $casts = [
         'release_date' => 'date',
+        'seasons'      => 'integer',
         'length'       => 'integer',
     ];
 
@@ -33,7 +35,7 @@ class Series extends Model
         return $this->belongsTo(Director::class);
     }
 
-    public function tyoe(): BelongsTo
+    public function type(): BelongsTo
     {
         return $this->belongsTo(Type::class);
     }

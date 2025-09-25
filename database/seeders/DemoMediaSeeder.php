@@ -75,6 +75,12 @@ class DemoMediaSeeder extends Seeder
             'length' => 114,
         ]);
 
+        $barbie->update(['image' => 'img/barbie.jpg']);
+        $interstellar->update(['image' => 'img/interstellar.jpg']);
+        $dune->update(['image' => 'img/dune.jpg']);
+        $inception->update(['image' => 'img/eredet.jpg']);
+        $lala->update(['image' => 'img/alom.jpg']);
+
         // Pivot színészek
         $inception->actors()->syncWithoutDetaching([$leo->id => ['is_lead' => true]]);
         $interstellar->actors()->syncWithoutDetaching([$anne->id => ['is_lead' => true]]);
@@ -82,7 +88,7 @@ class DemoMediaSeeder extends Seeder
         $barbie->actors()->syncWithoutDetaching([$margot->id => ['is_lead' => true]]);
 
         // SERIES (5 db)
-        Series::firstOrCreate([
+        $breakingbad = Series::firstOrCreate([
             'title' => 'Breaking Bad',
             'director_id' => $gilligan->id,
             'type_id' => $crime->id,
@@ -90,7 +96,7 @@ class DemoMediaSeeder extends Seeder
             'length' => 47,
         ]);
 
-        Series::firstOrCreate([
+        $csernobil = Series::firstOrCreate([
             'title' => 'Csernobil',
             'director_id' => $renck->id,
             'type_id' => $drama->id,
@@ -98,7 +104,7 @@ class DemoMediaSeeder extends Seeder
             'length' => 60,
         ]);
 
-        Series::firstOrCreate([
+        $mandalorian = Series::firstOrCreate([
             'title' => 'The Mandalorian',
             'director_id' => $favreau->id,
             'type_id' => $action->id,
@@ -106,7 +112,7 @@ class DemoMediaSeeder extends Seeder
             'length' => 40,
         ]);
 
-        Series::firstOrCreate([
+        $strangerthings = Series::firstOrCreate([
             'title' => 'Stranger Things',
             'director_id' => $duffer->id,
             'type_id' => $drama->id,
@@ -114,15 +120,21 @@ class DemoMediaSeeder extends Seeder
             'length' => 50,
         ]);
 
-        Series::firstOrCreate([
+        $westworld = Series::firstOrCreate([
             'title' => 'Westworld',
-            'director_id' => $nolan->id, // csak példa
+            'director_id' => $nolan->id, 
             'type_id' => $scifi->id,
             'release_date' => '2016-10-02',
             'length' => 60,
         ]);
 
-        // Példa sorozat-színész pivot
+        $breakingbad->update(['image' => 'img/breakingbad.jpg']);
+        $csernobil->update(['image' => 'img/csernobil.jpg']);
+        $mandalorian->update(['image' => 'img/mandalorian.jpg']);
+        $strangerthings->update(['image' => 'img/strangerthings.jpg']);
+        $westworld->update(['image' => 'img/westworld.jpg']);
+
+        
         $bb = Series::where('title','Breaking Bad')->first();
         if ($bb) $bb->actors()->syncWithoutDetaching([$bryan->id => ['is_lead' => true], $aaron->id => ['is_lead' => true]]);
     }
