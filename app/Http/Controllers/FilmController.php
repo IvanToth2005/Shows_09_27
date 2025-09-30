@@ -19,12 +19,10 @@ class FilmController extends Controller
 
     $query = Film::with(['director','type']);
 
-    // típus szűrő
     if ($typeParam !== 'all' && ctype_digit((string)$typeParam)) {
         $query->where('type_id', (int)$typeParam);
     }
 
-    // kereső
     if ($q !== '') {
         $query->where(function($w) use ($q) {
             $w->where('title', 'like', "%{$q}%")

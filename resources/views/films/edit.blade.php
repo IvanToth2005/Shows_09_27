@@ -26,8 +26,6 @@
     .btn.primary{background:#0ea5e9;color:#fff}
     .btn.secondary{background:#fff;border-color:#e2e8f0;color:#0f172a}
     .meta{color:var(--muted);font-size:14px}
-
-    /* előnézet */
     .poster-wrap{border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;aspect-ratio:6/4;background:#f1f5f9}
     .poster{width:100%;height:100%;object-fit:cover}
     .help{font-size:12px;color:#64748b;margin-top:4px}

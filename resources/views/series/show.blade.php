@@ -20,7 +20,6 @@
 
     .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#e0f2fe;border:1px solid #bae6fd;font-size:12px;margin-right:6px}
 
-    /* --- Meta adatok szép, függőleges listában --- */
     .facts{ margin:8px 0 14px; }
     .facts .badge{ margin-bottom:8px; }
     .facts-list{ list-style:none; margin:0; padding:0; }

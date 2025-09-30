@@ -21,21 +21,19 @@ class SearchController extends Controller
             ]);
         }
 
-        // FILMEK + SOROZATOK keresése (cím + rendező + típus)
         $films = Film::with(['type','director','actors'])
             ->where(function($w) use ($q) {
-                $w->where('title','like',"%{$q}%")
-                  ->orWhereHas('director', fn($d)=>$d->where('name','like',"%{$q}%"))
-                  ->orWhereHas('type',     fn($t)=>$t->where('name','like',"%{$q}%"));
+                $w->where('title','like',"%{$q}%");
+                  //->orWhereHas('director', fn($d)=>$d->where('name','like',"%{$q}%"));
+
             })
             ->orderBy('title')
             ->get();
 
         $series = Series::with(['type','director','actors'])
             ->where(function($w) use ($q) {
-                $w->where('title','like',"%{$q}%")
-                  ->orWhereHas('director', fn($d)=>$d->where('name','like',"%{$q}%"))
-                  ->orWhereHas('type',     fn($t)=>$t->where('name','like',"%{$q}%"));
+                $w->where('title','like',"%{$q}%");
+                 // ->orWhereHas('director', fn($d)=>$d->where('name','like',"%{$q}%"));
             })
             ->orderBy('title')
             ->get();
@@ -57,8 +55,7 @@ class SearchController extends Controller
                 ->where('name','like',"%{$q}%")
                 ->orWhereHas('films', function($f) use ($q) {
                     $f->where('title','like',"%{$q}%")
-                      ->orWhereHas('director', fn($d)=>$d->where('name','like',"%{$q}%"))
-                      ->orWhereHas('type',     fn($t)=>$t->where('name','like',"%{$q}%"));
+                      ->orWhereHas('director', fn($d)=>$d->where('name','like',"%{$q}%"));
                 })
                 ->orderBy('name')
                 ->get();

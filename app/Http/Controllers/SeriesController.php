@@ -71,7 +71,7 @@ class SeriesController extends Controller
         $series = Series::create($data);
 
         return redirect()
-            ->route('series.index')      // ha már van show oldalad, cseréld: series.show, $series
+            ->route('series.index')      
             ->with('success', 'Sorozat létrehozva: '.$series->title);
     }
     /**

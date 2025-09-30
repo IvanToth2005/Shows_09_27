@@ -9,14 +9,13 @@ class DemoMediaSeeder extends Seeder
 {
     public function run(): void
     {
-        // GENRES
+
         $scifi  = Type::firstOrCreate(['name' => 'Sci-Fi']);
         $drama  = Type::firstOrCreate(['name' => 'Dráma']);
         $action = Type::firstOrCreate(['name' => 'Akció']);
         $comedy = Type::firstOrCreate(['name' => 'Vígjáték']);
         $crime  = Type::firstOrCreate(['name' => 'Bűnügyi']);
 
-        // DIRECTORS
         $nolan      = Director::firstOrCreate(['name' => 'Christopher Nolan']);
         $villeneuve = Director::firstOrCreate(['name' => 'Denis Villeneuve']);
         $chazelle   = Director::firstOrCreate(['name' => 'Damien Chazelle']);
@@ -26,7 +25,7 @@ class DemoMediaSeeder extends Seeder
         $favreau    = Director::firstOrCreate(['name' => 'Jon Favreau']);
         $duffer     = Director::firstOrCreate(['name' => 'Duffer Brothers']);
 
-        // ACTORS (pár példa)
+
         $leo   = Actor::firstOrCreate(['name' => 'Leonardo DiCaprio']);
         $anne  = Actor::firstOrCreate(['name' => 'Anne Hathaway']);
         $margot= Actor::firstOrCreate(['name' => 'Margot Robbie']);
@@ -34,7 +33,7 @@ class DemoMediaSeeder extends Seeder
         $bryan = Actor::firstOrCreate(['name' => 'Bryan Cranston']);
         $aaron = Actor::firstOrCreate(['name' => 'Aaron Paul']);
 
-        // FILMS (5 db) – két Nolan film
+
         $inception = Film::firstOrCreate([
             'title' => 'Eredet',
             'director_id' => $nolan->id,
@@ -45,7 +44,7 @@ class DemoMediaSeeder extends Seeder
 
         $interstellar = Film::firstOrCreate([
             'title' => 'Csillagok között',
-            'director_id' => $nolan->id,                 // UGYANAZ a rendező
+            'director_id' => $nolan->id,                 
             'type_id' => $scifi->id,
             'release_date' => '2014-11-07',
             'length' => 169,
@@ -81,13 +80,13 @@ class DemoMediaSeeder extends Seeder
         $inception->update(['image' => 'img/eredet.jpg']);
         $lala->update(['image' => 'img/alom.jpg']);
 
-        // Pivot színészek
+
         $inception->actors()->syncWithoutDetaching([$leo->id => ['is_lead' => true]]);
         $interstellar->actors()->syncWithoutDetaching([$anne->id => ['is_lead' => true]]);
         $lala->actors()->syncWithoutDetaching([$ryan->id => ['is_lead' => true]]);
         $barbie->actors()->syncWithoutDetaching([$margot->id => ['is_lead' => true]]);
 
-        // SERIES (5 db)
+
         $breakingbad = Series::firstOrCreate([
             'title' => 'Breaking Bad',
             'director_id' => $gilligan->id,

@@ -11,13 +11,13 @@
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Arial,sans-serif;background:#f7fafc;color:var(--ink)}
     .container{max-width:1120px;margin:28px auto;padding:0 16px}
 
-    /* szűrő gombok */
+
     .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0 22px}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid #e2e8f0;background:#fff;color:var(--ink);font-weight:600;text-decoration:none;transition:.15s}
     .pill:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.06);border-color:#cbd5e1}
     .pill.active{background:linear-gradient(90deg,#ff80b5,#60a5fa);color:#fff;border-color:transparent;box-shadow:0 8px 22px rgba(96,165,250,.25)}
 
-    /* grid + card – ugyanaz, mint a sorozatoknál */
+    
     .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
     @media(max-width:980px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
     @media(max-width:640px){ .grid{grid-template-columns:1fr;} }
@@ -34,7 +34,7 @@
     .meta{font-size:13px;color:var(--muted);margin:0 0 8px}
     .title{margin:0 0 8px;font-size:20px;font-weight:800}
 
-    /* akció ikonok – törlés / szerkesztés */
+    
     .card-actions{position:absolute;top:10px;right:10px;z-index:4;display:flex;flex-direction:column;gap:8px}
     .icon-btn{width:36px;height:36px;border-radius:9999px;display:grid;place-items:center;cursor:pointer;background:#fff;border:2px solid #e2e8f0;box-shadow:0 6px 14px rgba(2,6,23,.08);opacity:0;transform:translateY(-6px);transition:.2s}
     .card:hover .icon-btn{opacity:1;transform:translateY(0)}
