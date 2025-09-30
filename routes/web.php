@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\ActorController;
+use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\SearchController;
 use App\Models\Film;
 use App\Models\Series;
@@ -16,5 +17,10 @@ Route::get('/', function () {
 
 Route::resource('films', FilmController::class)->parameters(['films' => 'film']);
 Route::resource('series', SeriesController::class)->parameters(['series' => 'series']);
-Route::resource('actors', ActorController::class)->only(['index','show']);
+Route::resource('actors', ActorController::class)->only([
+    'index', 'show', 'create', 'store', 'edit', 'update', 'destroy'
+]);
 Route::get('/kereses', [SearchController::class, 'index'])->name('search.index');
+Route::resource('directors', DirectorController::class)->only([
+    'index', 'show', 'create', 'store', 'edit', 'update', 'destroy'
+]);

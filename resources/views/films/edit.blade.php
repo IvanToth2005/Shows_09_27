@@ -26,6 +26,8 @@
     .btn.primary{background:#0ea5e9;color:#fff}
     .btn.secondary{background:#fff;border-color:#e2e8f0;color:#0f172a}
     .meta{color:var(--muted);font-size:14px}
+
+    /* előnézet */
     .poster-wrap{border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;aspect-ratio:6/4;background:#f1f5f9}
     .poster{width:100%;height:100%;object-fit:cover}
     .help{font-size:12px;color:#64748b;margin-top:4px}
@@ -82,8 +84,31 @@
               <input id="length" type="number" name="length" min="1" step="1" value="{{ old('length', $film->length) }}">
             </div>
           </div>
+          <label>Színészek</label>
+          <div style="display:flex;flex-direction:column;gap:10px;border:1px solid #e2e8f0;border-radius:12px;padding:12px;max-height:300px;overflow:auto">
+            @foreach($actors as $actor)
+              @php
+                $selected = old('actors', $film->actors->pluck('id')->toArray());
+                $isSelected = in_array($actor->id, $selected);
 
-          <label for="image">Kép útvonal</label>
+                $pivotData = $film->actors->firstWhere('id', $actor->id)?->pivot;
+                $isLead = old("is_lead.{$actor->id}", $pivotData?->is_lead);
+              @endphp
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <label style="display:flex;align-items:center;gap:10px">
+                  <input type="checkbox" name="actors[]" value="{{ $actor->id }}" {{ $isSelected ? 'checked' : '' }}>
+                  {{ $actor->name }}
+                </label>
+
+                <label style="display:flex;align-items:center;gap:4px;font-size:13px;color:#475569">
+                  <input type="checkbox" name="is_lead[{{ $actor->id }}]" value="1" {{ $isLead ? 'checked' : '' }}>
+                  főszerep
+                </label>
+              </div>
+            @endforeach
+          </div>
+          <p class="help">Jelöld ki a színészeket, és ha főszereplő, pipáld be a "főszerep" mezőt.</p>
+                    <label for="image">Kép útvonal</label>
           <input id="image" type="text" name="image" placeholder="pl. img/inception.jpg"
                  value="{{ old('image', $film->image) }}">
 

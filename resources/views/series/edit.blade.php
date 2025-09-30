@@ -81,7 +81,30 @@
               <input id="image" type="text" name="image" placeholder="pl. img/series/dune.jpg" value="{{ old('image', $series->image) }}">
             </div>
           </div>
+          <label>Színészek</label>
+          <div style="display:flex;flex-direction:column;gap:10px;border:1px solid #e2e8f0;border-radius:12px;padding:12px;max-height:300px;overflow:auto">
+            @foreach($actors as $actor)
+              @php
+                $selected = old('actors', $series->actors->pluck('id')->toArray());
+                $isSelected = in_array($actor->id, $selected);
 
+                $pivotData = $series->actors->firstWhere('id', $actor->id)?->pivot;
+                $isLead = old("is_lead.{$actor->id}", $pivotData?->is_lead);
+              @endphp
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <label style="display:flex;align-items:center;gap:10px">
+                  <input type="checkbox" name="actors[]" value="{{ $actor->id }}" {{ $isSelected ? 'checked' : '' }}>
+                  {{ $actor->name }}
+                </label>
+
+                <label style="display:flex;align-items:center;gap:4px;font-size:13px;color:#475569">
+                  <input type="checkbox" name="is_lead[{{ $actor->id }}]" value="1" {{ $isLead ? 'checked' : '' }}>
+                  főszerep
+                </label>
+              </div>
+            @endforeach
+          </div>
+          <p class="help">Jelöld ki a színészeket, és ha főszereplő, pipáld be a "főszerep" mezőt.</p>
           <label for="description">Leírás</label>
           <textarea id="description" name="description">{{ old('description', $series->description) }}</textarea>
 

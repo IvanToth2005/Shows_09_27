@@ -82,6 +82,7 @@
       <a href="{{ route('films.index') }}" class="{{ request()->routeIs('films.*') ? 'active' : '' }}">Filmek</a>
       <a href="{{ route('series.index') }}" class="{{ request()->routeIs('series.*') ? 'active' : '' }}">Sorozatok</a>
       <a href="{{ route('actors.index') }}" class="{{ request()->routeIs('actors.*') ? 'active' : '' }}">Színészek</a>
+      <a href="{{ route('directors.index') }}" class="{{ request()->routeIs('directors.*') ? 'active' : '' }}">Rendezők</a>
 
     </div>
   </div>

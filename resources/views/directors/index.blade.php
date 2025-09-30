@@ -190,9 +190,9 @@
         align-items: center;
       "
     >
-      Színészek
+      Rendezők
       <a
-        href="{{ route('actors.create') }}"
+        href="{{ route('directors.create') }}"
         style="
           background: #3b82f6;
           color: white;
@@ -203,7 +203,7 @@
           font-size: 14px;
         "
       >
-        <i class="fas fa-plus" style="margin-right: 6px"></i> Új színész hozzáadása
+        <i class="fas fa-plus" style="margin-right: 6px"></i> Új rendező hozzáadása
       </a>
     </h1>
     <p class="meta" style="margin: 0 0 16px">
@@ -211,58 +211,24 @@
     </p>
 
     <section class="grid">
-      @forelse($actors as $actor)
+      @forelse($directors as $director)
       <article class="card">
-        <img class="avatar" src="{{ $actor->image_url }}" alt="{{ $actor->name }}" />
+        <img class="avatar" src="{{ $director->image_url }}" alt="{{ $director->name }}" />
 
         <div>
           @php
-          $filmCount = $actor->films->count();
-          $seriesCount = $actor->series->count();
+          $filmCount = $director->films->count();
+          $seriesCount = $director->series->count();
           @endphp
 
-          <h3 class="name">{{ $actor->name }}</h3>
+          <h3 class="name">{{ $director->name }}</h3>
           <p class="meta">
             Filmek: {{ $filmCount }}
             @if($seriesCount) • Sorozatok: {{ $seriesCount }} @endif
           </p>
 
           @if($filmCount || $seriesCount)
-          @if($filmCount)
-          <div class="section-title">Filmek</div>
-          <div class="chips">
-            @foreach($actor->films as $f)
-            <a
-              class="chip film {{ $f->pivot->is_lead ? 'lead' : '' }}"
-              href="{{ route('films.show', $f) }}"
-            >
-              {{ $f->title }}
-              <span class="badge">• {{ $f->release_date?->format('Y') }}</span>
-              @if($f->pivot->is_lead)
-              <span class="badge">főszerep</span>
-              @endif
-            </a>
-            @endforeach
-          </div>
-          @endif
 
-          @if($seriesCount)
-          <div class="section-title" style="margin-top: 10px">Sorozatok</div>
-          <div class="chips">
-            @foreach($actor->series as $s)
-            <a
-              class="chip series {{ $s->pivot->is_lead ? 'lead' : '' }}"
-              href="{{ route('series.show', $s) }}"
-            >
-              {{ $s->title }}
-              <span class="badge">• {{ $s->release_date?->format('Y') }}</span>
-              @if($s->pivot->is_lead)
-              <span class="badge">főszerep</span>
-              @endif
-            </a>
-            @endforeach
-          </div>
-          @endif
           @else
           <p class="meta">Nincs hozzárendelt film/sorozat.</p>
           @endif
@@ -272,8 +238,8 @@
         <div class="card-actions" aria-label="Színész műveletek">
           <form
             method="POST"
-            action="{{ route('actors.destroy', $actor) }}"
-            onsubmit="return confirm('Biztosan törlöd: {{ addslashes($actor->name) }}?')"
+            action="{{ route('directors.destroy', $director) }}"
+            onsubmit="return confirm('Biztosan törlöd: {{ addslashes($director->name) }}?')"
             style="margin: 0"
           >
             @csrf
@@ -288,7 +254,7 @@
             </button>
           </form>
           <a
-            href="{{ route('actors.edit', $actor) }}"
+            href="{{ route('directors.edit', $director) }}"
             class="icon-btn is-primary"
             title="Módosítás"
             aria-label="Módosítás"
@@ -298,11 +264,11 @@
         </div>
       </article>
       @empty
-      <p>Nincs még színész az adatbázisban.</p>
+      <p>Nincs még rendező az adatbázisban.</p>
       @endforelse
     </section>
 
-    <div style="margin-top: 14px">{{ $actors->links() }}</div>
+    <div style="margin-top: 14px">{{ $directors->links() }}</div>
   </div>
 </body>
 </html>

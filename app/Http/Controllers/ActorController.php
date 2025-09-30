@@ -35,7 +35,7 @@ class ActorController extends Controller
      */
     public function create()
     {
-        //
+        return view('actors.create');
     }
 
     /**
@@ -43,7 +43,14 @@ class ActorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'image_url' => 'nullable|url|max:255',
+        ]);
+
+        Actor::create($data);
+
+        return redirect()->route('actors.index')->with('success', 'Színész hozzáadva.');
     }
 
     /**
@@ -51,8 +58,7 @@ class ActorController extends Controller
      */
     public function show(Actor $actor)
     {
-            $actor->load(['films.type','films.director','series.type','series.director']);
-            return view('actors.show', compact('actor'));
+           
     }
 
     /**
@@ -60,15 +66,21 @@ class ActorController extends Controller
      */
     public function edit(Actor $actor)
     {
-        //
+        return view('actors.edit', compact('actor'));
     }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Actor $actor)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'image_url' => 'nullable|url|max:255',
+        ]);
+
+        $actor->update($data);
+
+        return redirect()->route('actors.index', $actor)->with('success', 'Színész frissítve.');
     }
 
     /**
@@ -76,6 +88,8 @@ class ActorController extends Controller
      */
     public function destroy(Actor $actor)
     {
-        //
+        $actor->delete();
+
+        return redirect()->route('actors.index')->with('success', 'Színész törölve.');
     }
 }
